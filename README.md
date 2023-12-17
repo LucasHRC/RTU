@@ -180,114 +180,14 @@ class Program
 
     Decryption is done by applying the same XOR operation between the encrypted text and the key.
 
----
 
 ## Conclusion
 
 In summary, this project provided an opportunity to explore XOR encryption through an implementation in C#. Although the algorithm is simple, it offers a didactic introduction to cryptography. The detailed C# code illustrates how to apply XOR to encrypt and decrypt text.
 
-However, it is essential to recognize the
+However, it is essential to recognize the limitations of XOR in the context of security. XOR encryption alone does not withstand more advanced attacks, such as key attacks, making it inappropriate for high-security requirements. This underscores the importance of considering more robust and complex algorithms when security is a priority.
 
- limitations of XOR in the context of security. XOR encryption using System;
-using System.Text;
-
-class Program
-{
-    static void Main()
-    {
-        while (true)
-        {
-            Console.WriteLine("1. Chiffrer un texte");
-            Console.WriteLine("2. Déchiffrer un texte");
-            Console.WriteLine("0. Quitter");
-            Console.Write("Choisissez une option : ");
-
-            string choice = Console.ReadLine();
-
-            switch (choice)
-            {
-                case "1":
-                    EncryptText();
-                    break;
-                case "2":
-                    DecryptText();
-                    break;
-                case "0":
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.WriteLine("Option non valide. Veuillez réessayer.");
-                    break;
-            }
-        }
-    }
-
-    static void EncryptText()
-    {
-        Console.Clear();
-        Console.Write("Entrez le texte à chiffrer : ");
-        string text = Console.ReadLine();
-
-        Console.Write("Entrez la clé : ");
-        string key = Console.ReadLine();
-
-        string encryptedBinary = EncryptToBinary(text, key);
-        Console.WriteLine("Texte chiffré en binaire : " + encryptedBinary);
-        Console.WriteLine("Texte chiffré : " + Decrypt(encryptedBinary, key));
-    }
-
-    static void DecryptText()
-    {
-        Console.Clear();
-        Console.Write("Entrez le texte à déchiffrer (en binaire) : ");
-        string encryptedBinary = Console.ReadLine();
-
-        Console.Write("Entrez la clé : ");
-        string key = Console.ReadLine();
-
-        Console.WriteLine("Texte déchiffré : " + Decrypt(encryptedBinary, key));
-    }
-
-    static string StringToBinary(string text)
-    {
-        StringBuilder binary = new StringBuilder();
-        foreach (char c in text)
-        {
-            binary.Append(Convert.ToString(c, 2).PadLeft(8, '0'));
-        }
-        return binary.ToString();
-    }
-
-    static string EncryptToBinary(string text, string key)
-    {
-        StringBuilder encrypted = new StringBuilder();
-
-        for (int i = 0; i < text.Length; i++)
-        {
-            char xorResult = (char)(text[i] ^ key[i % key.Length]);
-            encrypted.Append(Convert.ToString(xorResult, 2).PadLeft(8, '0'));
-        }
-
-        return encrypted.ToString();
-    }
-
-    static string Decrypt(string encryptedBinary, string key)
-    {
-        StringBuilder decryptedText = new StringBuilder();
-
-        for (int i = 0; i < encryptedBinary.Length; i += 8)
-        {
-            string binaryChunk = encryptedBinary.Substring(i, 8);
-            char decryptedChar = (char)Convert.ToByte(binaryChunk, 2);
-
-            // Appliquer l'opération XOR avec la clé pour déchiffrer
-            char xorResult = (char)(decryptedChar ^ key[i / 8 % key.Length]);
-            decryptedText.Append(xorResult);
-        }
-
-        return decryptedText.ToString();
-    }
-}alone does not withstand more advanced attacks, such as key attacks, making it inappropriate for high-security requirements. This underscores the importance of considering more robust and complex algorithms when security is a priority.
+---
 
 ## For More…
 
